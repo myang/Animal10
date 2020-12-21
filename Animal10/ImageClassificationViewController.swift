@@ -27,7 +27,7 @@ class ImageClassificationViewController: UIViewController {
              To use a different Core ML classifier model, add it to the project
              and replace `MobileNet` with that model's generated Swift class.
              */
-            let model = try VNCoreMLModel(for: MobileNet().model)
+            let model = try VNCoreMLModel(for: Animal10(configuration: MLModelConfiguration()).model)
             
             let request = VNCoreMLRequest(model: model, completionHandler: { [weak self] request, error in
                 self?.processClassifications(for: request, error: error)
@@ -110,7 +110,7 @@ class ImageClassificationViewController: UIViewController {
         present(photoSourcePicker, animated: true)
     }
     
-    func presentPhotoPicker(sourceType: UIImagePickerControllerSourceType) {
+    func presentPhotoPicker(sourceType: UIImagePickerController.SourceType) {
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = sourceType
@@ -121,12 +121,12 @@ class ImageClassificationViewController: UIViewController {
 extension ImageClassificationViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // MARK: - Handling Image Picker Selection
 
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+
         picker.dismiss(animated: true)
         
         // We always expect `imagePickerController(:didFinishPickingMediaWithInfo:)` to supply the original image.
-        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-        imageView.image = image
+        let image = info[.originalImage] as! UIImage
         updateClassifications(for: image)
     }
 }
