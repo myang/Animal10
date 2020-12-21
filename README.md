@@ -1,4 +1,4 @@
-# Classifying Images with Vision and Core ML
+# Classifying 10 animals with Create ML model and Core ML
 
 Preprocess photos using the Vision framework and classify them with a Core ML model.
 
@@ -12,7 +12,7 @@ This sample app uses the open source MobileNet model, one of several [available 
 
 ## Getting Started
 
-This sample code project runs on iOS 11. However, you can also use Vision and Core ML in your own apps on macOS 10.13, iOS 11, or tvOS 11.
+This sample code project runs on iOS 11. However, you can also use Vision and Core ML in your own apps on macOS 11 or iOS 14.
 
 ## Preview the Sample App
 
@@ -20,10 +20,10 @@ To see this sample app in action, build and run the project, then use the button
 
 ## Set Up Vision with a Core ML Model
 
-Core ML automatically generates a Swift class that provides easy access to your ML model; in this sample, Core ML automatically generates the `MobileNet` class from the `MobileNet` model.  To set up a Vision request using the model, create an instance of that class and use its `model` property  to create a [`VNCoreMLRequest`](https://developer.apple.com/documentation/vision/vncoremlrequest) object. Use the request object's completion handler to specify a method to receive results from the model after you run the request.
+Core ML automatically generates a Swift class that provides easy access to your ML model; in this sample, Core ML automatically generates the `MobileNet` class from the `Animal10` model.  To set up a Vision request using the model, create an instance of that class and use its `model` property  to create a [`VNCoreMLRequest`](https://developer.apple.com/documentation/vision/vncoremlrequest) object. Use the request object's completion handler to specify a method to receive results from the model after you run the request.
 
 ``` swift
-let model = try VNCoreMLModel(for: MobileNet().model)
+let model = try VNCoreMLModel(for: Animal10(configuration: MLModelConfiguration()).model)
 
 let request = VNCoreMLRequest(model: model, completionHandler: { [weak self] request, error in
     self?.processClassifications(for: request, error: error)
